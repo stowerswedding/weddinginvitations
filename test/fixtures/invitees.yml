@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  rsvp_status:
+  phone_number: MyString
+  diet: MyString
+  will_drink: false
+
+two:
+  name: MyString
+  rsvp_status:
+  phone_number: MyString
+  diet: MyString
+  will_drink: false

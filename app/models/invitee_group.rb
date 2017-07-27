@@ -1,0 +1,2 @@
+class InviteeGroup < ApplicationRecord
+end
