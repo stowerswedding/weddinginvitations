@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resource :messages do
-    collection do
-      post 'reply'
-    end
-  end
+  root 'dashboard#index'
+  devise_for :users, skip: [:registrations]
+
+  post '/messages/reply', to: 'messages#reply'
 end
