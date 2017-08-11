@@ -3,14 +3,14 @@ class CreateInvites < ActiveRecord::Migration[5.1]
     create_table :invites do |t|
       t.belongs_to :invitee_group, index: true
       t.belongs_to :invitee, index: true
-      t.integer :rsvp_status
-      t.integer :role
+      t.integer :rsvp_status, null: false, default: 0
+      t.integer :role, null: false, default: 0
 
       t.timestamps
     end
 
     create_table :invitee_groups do |t|
-      t.integer :progress_point
+      t.integer :progress_point, null: false, default: 0
 
       t.timestamps
     end

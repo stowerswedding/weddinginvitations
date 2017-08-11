@@ -1,0 +1,19 @@
+Hello
+
+-#= link_to 'Add an Invitee', group_form_invitee_groups_path, remote: true, class: 'add-invitee'
+= link_to 'New Invitee Group', new_invitee_group_path
+%table
+  %tr
+    %th Phone Number
+    %th Name
+    %th RSVP Status
+  - @invitee_groups.each do |invitee_group|
+    - lead = invitee_group.leads.first
+    %tr
+      %td= lead.phone_number
+      %td= lead.name
+      %td= lead.invite.rsvp_status
+      - invitee_group.members.each do |member|
+        %tr
+          %td
+          %td= member.name
