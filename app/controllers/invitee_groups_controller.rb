@@ -7,8 +7,6 @@ class InviteeGroupsController < ApplicationController
 
   def new
     @invitee_group = InviteeGroup.new
-    @invitees = @invitee_group.invitees.build
-    @invites = @invitee_group.invites.build
   end
 
   def group_form
@@ -22,17 +20,24 @@ class InviteeGroupsController < ApplicationController
   def create
     @invitee_group = InviteeGroup.create
 
-    invitee_name = invitees_attributes_params['name']
-    invitee_phone_number = invitees_attributes_params['phone_number']
+    lead_name = lead_params['name']
+    lead_phone_number = lead_params['phone_number']
 
-    @invitee_group.leads.create name: invitee_name, phone_number: invitee_phone_number
+    @invitee_group.leads.create name: lead_name, phone_number: lead_phone_number
     @invitee_group.invites = [@invitee_group.leads.first.invite]
+
+    if members_params
+      members_params.each do |member_params|
+        member_name = members_params[member_params]['name']
+
+        @invitee_group.members.create name: member_name
+        @invitee_group.invites << @invitee_group.members.last.invite
+      end
+    end
+
     @invitee_group.save
 
     redirect_to invitee_groups_path
-  end
-
-  def show
   end
 
   def edit
@@ -46,8 +51,12 @@ class InviteeGroupsController < ApplicationController
 
   private
 
-  def invitees_attributes_params
-    params['invitee_group']['invitees_attributes']['0']
+  def lead_params
+    params['invitee_group']['lead']
+  end
+
+  def members_params
+    params['invitee_group']['members']
   end
 
 end

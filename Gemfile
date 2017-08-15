@@ -16,6 +16,7 @@ gem 'puma', '~> 3.7'
 gem 'sass-rails', github: "rails/sass-rails"
 gem 'haml-rails'
 gem 'jquery-rails'
+gem 'jquery-turbolinks'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

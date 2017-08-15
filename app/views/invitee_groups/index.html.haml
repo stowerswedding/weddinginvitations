@@ -10,10 +10,10 @@ Hello
   - @invitee_groups.each do |invitee_group|
     - lead = invitee_group.leads.first
     %tr
-      %td= lead.phone_number
-      %td= lead.name
-      %td= lead.invite.rsvp_status
+      %td= lead['phone_number']
+      %td= lead['name']
+      %td= lead.invite['rsvp_status']
       - invitee_group.members.each do |member|
         %tr
           %td
-          %td= member.name
+          %td= member['name']

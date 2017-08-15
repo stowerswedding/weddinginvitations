@@ -1,9 +1,11 @@
 Hello let's make a new Invitee Group
 = form_for(@invitee_group) do |invitee_group_form|
   -#= invitee_group_form.error_messages
-  = invitee_group_form.fields_for :invitees do |invitees_form|
-    = invitees_form.label :name, 'Name'
-    = invitees_form.text_field :name
-    = invitees_form.label :phone_number, 'Phone Number'
-    = invitees_form.text_field :phone_number
+  = invitee_group_form.fields_for :lead do |lead_form|
+    = lead_form.label :name, 'Name'
+    = lead_form.text_field :name
+    = lead_form.label :phone_number, 'Phone Number'
+    = lead_form.text_field :phone_number
+  #members
   = invitee_group_form.submit 'Create'
+%button.new-member Add Group Member
