@@ -1,5 +1,5 @@
 class Invite < ApplicationRecord
-  belongs_to :invitee
+  belongs_to :invitee, dependent: :destroy
   belongs_to :invitee_group
 
   enum role: { member: 0, lead: 1 }

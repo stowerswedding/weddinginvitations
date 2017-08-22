@@ -1,5 +1,5 @@
 class InviteeGroup < ApplicationRecord
-  has_many :invites, autosave: true
+  has_many :invites, autosave: true, dependent: :destroy
   has_many :invitees, through: :invites, autosave: true
 
   has_many :member_invites, -> { where role: :member }, class_name: 'Invite', autosave: true

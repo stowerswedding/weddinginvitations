@@ -9,4 +9,13 @@ $(document).on('turbolinks:load', function(){
       $(this).parent().remove();
     });
   });
+  $(".hide-fields").click(function(event) {
+    event.preventDefault();
+    var res = confirm("Are you sure?");
+    if (res) {
+      var member_block = $(this).parent();
+      member_block.hide();
+      member_block.children('input').val('');
+    }
+  });
 });

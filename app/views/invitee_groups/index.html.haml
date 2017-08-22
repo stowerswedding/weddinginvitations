@@ -7,13 +7,18 @@ Hello
     %th Phone Number
     %th Name
     %th RSVP Status
+    %th Actions
   - @invitee_groups.each do |invitee_group|
     - lead = invitee_group.leads.first
     %tr
       %td= lead['phone_number']
       %td= lead['name']
       %td= lead.invite['rsvp_status']
+      %td
+        = link_to 'Edit', [:edit, invitee_group]
+        = link_to 'Destroy',  { action: :destroy, id: invitee_group.id }, method: :delete, data: { confirm: 'Are you sure?' }
       - invitee_group.members.each do |member|
         %tr
           %td
           %td= member['name']
+          %td= lead.invite['rsvp_status']
