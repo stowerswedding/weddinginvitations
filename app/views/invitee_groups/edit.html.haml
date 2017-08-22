@@ -1,0 +1,18 @@
+Edit Invitee Group
+= form_for(@invitee_group) do |invitee_group_form|
+  -#= invitee_group_form.error_messages
+  - @invitee_group.leads.each do |lead|
+    = invitee_group_form.fields_for :leads, lead do |lead_fields|
+      = lead_fields.label :name, 'Name'
+      = lead_fields.text_field :name
+      = lead_fields.label :phone_number, 'Phone Number'
+      = lead_fields.text_field :phone_number
+  #members
+    - @invitee_group.members.each do |member|
+      .member
+        = invitee_group_form.fields_for 'member[]', member do |member_fields|
+          = member_fields.label :name, 'Name'
+          = member_fields.text_field :name
+          %button.hide-fields Remove
+  = invitee_group_form.submit 'Update'
+%button.new-member Add Group Member
