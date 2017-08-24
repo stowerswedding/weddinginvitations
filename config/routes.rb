@@ -6,8 +6,8 @@ Rails.application.routes.draw do
     collection do
       get :group_form
       get :invitee_form
+      post :send_pending_invites
     end
   end
 
-  post '/messages/reply', to: 'messages#reply'
 end

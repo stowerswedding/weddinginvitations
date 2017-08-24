@@ -3,6 +3,7 @@ class InviteeGroupsController < ApplicationController
 
   def index
     @invitee_groups = InviteeGroup.all
+    @invitations_pending = InviteeGroup.invitation_pending.count.positive? ? true : false
   end
 
   def new
@@ -85,6 +86,11 @@ class InviteeGroupsController < ApplicationController
     invitee_group = InviteeGroup.find(params[:id])
     invitee_group.destroy
 
+    redirect_to invitee_groups_path
+  end
+
+  def send_pending_invites
+    MessageHandler.send_pending_invites
     redirect_to invitee_groups_path
   end
 

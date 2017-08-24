@@ -7,6 +7,7 @@ Hello
     %th Phone Number
     %th Name
     %th RSVP Status
+    %th Invitation Status
     %th Actions
   - @invitee_groups.each do |invitee_group|
     - lead = invitee_group.leads.first
@@ -14,6 +15,7 @@ Hello
       %td= lead['phone_number']
       %td= lead['name']
       %td= lead.invite['rsvp_status']
+      %td= invitee_group.progress_point.humanize.titleize
       %td
         = link_to 'Edit', [:edit, invitee_group]
         = link_to 'Destroy',  { action: :destroy, id: invitee_group.id }, method: :delete, data: { confirm: 'Are you sure?' }
@@ -22,3 +24,5 @@ Hello
           %td
           %td= member['name']
           %td= lead.invite['rsvp_status']
+- if @invitations_pending
+  = link_to 'Send Invites', send_pending_invites_invitee_groups_path, method: :post
