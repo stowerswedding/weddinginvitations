@@ -11,7 +11,15 @@ class InviteeGroup < ApplicationRecord
   accepts_nested_attributes_for :invites
   accepts_nested_attributes_for :invitees
 
-  enum progress_point: { invitation_pending: 0, invitation_sent: 1, rsvp_received: 2 }
+  enum progress_point: {
+    invitation_pending: 0,
+    invitation_sent: 1,
+    rsvp_received: 2,
+    awaiting_partial_rsvp: 3,
+    diet_flow_initialized: 4,
+    awaiting_diet: 5,
+    complete: 6
+  }
 
   def lead_invite
     lead_invitees.first

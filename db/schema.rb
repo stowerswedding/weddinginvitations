@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20170727204918) do
     t.integer "invitee_group_id"
     t.integer "invitee_id"
     t.integer "rsvp_status", default: 0, null: false
+    t.boolean "awaiting_diet", default: false, null: false
     t.integer "role", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

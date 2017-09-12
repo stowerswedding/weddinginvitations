@@ -10,4 +10,6 @@ Rails.application.routes.draw do
     end
   end
 
+  post '/invitees/receive_message', 'invitees#receive_message'
+
 end

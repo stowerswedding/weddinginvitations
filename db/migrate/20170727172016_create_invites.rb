@@ -4,6 +4,7 @@ class CreateInvites < ActiveRecord::Migration[5.1]
       t.belongs_to :invitee_group, index: true
       t.belongs_to :invitee, index: true
       t.integer :rsvp_status, null: false, default: 0
+      t.boolean :awaiting_diet, null: false, default: false
       t.integer :role, null: false, default: 0
 
       t.timestamps
