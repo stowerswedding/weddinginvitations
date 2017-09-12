@@ -42,7 +42,7 @@ class MessageHandler
 
     invite = Invite.find_by(invitee: lead_invitee)
 
-    if invite.rsvp_status == 'pending' && invite.invitee_group.invitation_sent?
+    if invite.invitee_group.invitation_sent?
       reply_body = process_rsvp(invite.invitee_group, message)
     elsif invite.invitee_group.awaiting_partial_rsvp?
       reply_body = process_partial_rsvp(invite.invitee_group, message)
@@ -52,6 +52,8 @@ class MessageHandler
       reply_body = mark_those_with_diet(invite.invitee_group, message)
     elsif invite.invitee_group.awaiting_diet?
       reply_body = process_diet(invite.invitee_group, message)
+    elsif invite.invitee_group.complete?
+      reply_body = process_post_completion_req(invite.invitee_group, message)
     end
 
     raise reply_body
@@ -344,6 +346,20 @@ class MessageHandler
     when '1' then invite.invitee.update(diet: 'vegetarian')
     when '2' then invite.invitee.update(diet: 'vegan')
     when '3' then invite.invitee.update(will_drink: false)
+    end
+  end
+
+  def self.process_post_completion_req(invitee_group, message)
+    "Sorry. Our silly computer didn't understand your response. Try again or reach out to the bride or groom for help."
+
+    if message == 'EDIT'
+      invitee_group.update(progress_point: :invitation_sent)
+
+      if invitee_group.invitees.many?
+        "Okay. We'll start over. Please text YES if everyone in your party can come, NO if you are all unable, or PART if only part of your party can make it."
+      else
+        "Okay. We'll start over. Please text YES if you can come or NO if you are unable."
+      end
     end
   end
 
