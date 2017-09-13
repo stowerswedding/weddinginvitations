@@ -19,7 +19,8 @@ class CreateInvites < ActiveRecord::Migration[5.1]
     create_table :invitees do |t|
       t.string :name
       t.string :phone_number
-      t.string :diet
+      t.integer :diet, default: nil
+      t.string :diet_details
       t.boolean :will_drink
 
       t.timestamps

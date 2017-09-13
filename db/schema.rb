@@ -21,7 +21,8 @@ ActiveRecord::Schema.define(version: 20170727204918) do
   create_table "invitees", force: :cascade do |t|
     t.string "name"
     t.string "phone_number"
-    t.string "diet"
+    t.integer "diet"
+    t.string "diet_details"
     t.boolean "will_drink"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

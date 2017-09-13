@@ -1,13 +1,13 @@
-Hello
-
--#= link_to 'Add an Invitee', group_form_invitee_groups_path, remote: true, class: 'add-invitee'
 = link_to 'New Invitee Group', new_invitee_group_path
 %table
   %tr
     %th Phone Number
     %th Name
     %th RSVP Status
-    %th Invitation Status
+    %th Diet
+    %th Diet Details
+    %th Will Drink
+    %th Progress Point
     %th Actions
   - @invitee_groups.each do |invitee_group|
     - lead = invitee_group.leads.first
@@ -15,6 +15,9 @@ Hello
       %td= lead['phone_number']
       %td= lead['name']
       %td= lead.invite['rsvp_status']
+      %td= lead['diet']
+      %td= lead['diet_details']
+      %td= lead['will_drink']
       %td= invitee_group.progress_point.humanize.titleize
       %td
         = link_to 'Edit', [:edit, invitee_group]
@@ -23,6 +26,9 @@ Hello
         %tr
           %td
           %td= member['name']
-          %td= lead.invite['rsvp_status']
+          %td= member.invite['rsvp_status']
+          %td= member['diet']
+          %td= member['diet_details']
+          %td= member['will_drink']
 - if @invitations_pending
-  = link_to 'Send Invites', send_pending_invites_invitee_groups_path, method: :post
+  = link_to 'Send Invites', send_pending_invites_invitee_groups_path, method: :post, data: { confirm: 'Are you sure? Once an invitation is sent, you can no longer edit or delete the group.' }
