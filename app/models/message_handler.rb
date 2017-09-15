@@ -30,9 +30,9 @@ class MessageHandler
           "See more details on the event and our wedding registry at: http://wedding.stowers.info"
       ].join("\n")
 
-      send_message(invitee_group_phone_number, message_body)
-
       invitee_group.update(progress_point: :invitation_sent)
+
+      send_message(invitee_group_phone_number, message_body)
     end
   end
 
@@ -56,7 +56,7 @@ class MessageHandler
       reply_body = process_post_completion_req(invite.invitee_group, message)
     end
 
-    raise reply_body
+    # raise reply_body
 
     send_message(phone_number, reply_body)
   end
@@ -298,7 +298,7 @@ class MessageHandler
       if invitee_group.invitees.many?
         "Is #{invitee_group.invites.accepted.first.invitee.name} (1) vegetarian, (2) vegan, (3) under 21/will not drink or (4) other? Plese text the numbers (separated with commas) associated with the statements that apply to #{invitee_group.invites.accepted.first.invitee.name}."
       else
-        "Are you (1) vegetarian, (2) vegan, (3) under 21/will not drink or (4) other? Plese text the numbers (separated with commas) associated with the statements that apply to you."
+        'Are you (1) vegetarian, (2) vegan, (3) under 21/will not drink or (4) other? Plese text the numbers (separated with commas) associated with the statements that apply to you.'
       end
     end
   end
@@ -341,10 +341,9 @@ class MessageHandler
 
   def self.response_to_bad_marking(invitee_group, converted_indexes)
     response = "Looks like you've sent this computer numbers which aren't associated with any party member. Try again or reach out to the bride or groom for help."
-    invitee_group.invites.accepted.to_a.each_index do |index|
+    (0..invitee_group.invites.accepted.count-1).each do |index|
       if converted_indexes.include? index
-        response = false
-        break
+        return false
       end
     end
     response
@@ -393,6 +392,8 @@ class MessageHandler
         return invitee_group.invites[remaining_invite_index].invitee.name
       end
     end
+
+    return nil
   end
 
   def self.set_diet(invite, indexes)
@@ -465,12 +466,12 @@ class MessageHandler
 
   def self.everyone_can_drink(invitee_group)
     if invitee_group.invites.accepted.many?
-      invitee_group.invites.accepted each do |invite|
+      invitee_group.invites.accepted.each do |invite|
         invite.invitee.update(will_drink: true)
       end
-    end
     else
-      invitee_group.invitees.accepted.first.update(will_drink: true)
+      invitee_group.invites.accepted.first.invitee.update(will_drink: true)
+    end
   end
 
 end
